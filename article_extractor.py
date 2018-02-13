@@ -1,4 +1,3 @@
-import urllib
 import os.path
 from bs4 import BeautifulSoup
 import urllib2
@@ -13,6 +12,10 @@ if not os.path.isfile(file_name):
 	file = open(file_name,"w+")
 	file.write(html)
 	file.close()
+
+#make folder if doesn't exist
+if not os.path.exists("articles"):
+	os.makedirs("articles")
 
 i = 0
 total = 0

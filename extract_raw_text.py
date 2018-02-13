@@ -2,6 +2,10 @@ from goose import Goose
 import os
 import string
 
+#make folder if doesn't exist
+if not os.path.exists("raw_text"):
+	os.makedirs("raw_text")
+
 i = 0
 for filename in os.listdir(os.getcwd() + "/articles"):
 	f = open("articles/" + filename)
@@ -15,9 +19,12 @@ for filename in os.listdir(os.getcwd() + "/articles"):
 
 	#use goose to extract raw_text
 	extractor = Goose()
-	article = extractor.extract(raw_html=html)
+	try:
+		article = extractor.extract(raw_html=html)
+	except:
+		print("Unable to extract raw text from " + filename)
 	text = article.cleaned_text
-	print(text)
+	#print(text)
 
 	#remove non ascii
 	printable = set(string.printable)
