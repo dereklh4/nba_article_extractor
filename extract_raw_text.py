@@ -13,6 +13,7 @@ for filename in os.listdir(os.getcwd() + "/articles"):
 	idx = html.find("comment")
 	html = html[idx:]
 
+	#use goose to extract raw_text
 	extractor = Goose()
 	article = extractor.extract(raw_html=html)
 	text = article.cleaned_text

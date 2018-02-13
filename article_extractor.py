@@ -1,11 +1,12 @@
 import urllib
 import os.path
 from bs4 import BeautifulSoup
-
 import urllib2
+
 starting_url = "http://www.espn.com/nba/news/archive"
 file_name = "archive.html"
 
+#download archive html file if not already downloaded
 if not os.path.isfile(file_name):
 	response = urllib2.urlopen(starting_url)
 	html = response.read()
@@ -37,7 +38,7 @@ with open(file_name) as file:
 			print(href)
 			total += 1
 			i += 1
-			if i < 5:
+			if i < 5: #only download 5 for now. Change once doing more
 				response = urllib2.urlopen(href)
 				html = response.read()
 				file = open("articles/" + title,"w+")
