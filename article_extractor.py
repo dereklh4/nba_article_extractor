@@ -43,6 +43,7 @@ with open(file_name) as file:
 			if title != None and not os.path.isfile("articles/" + title):
 				response = urllib2.urlopen(href)
 				html = response.read()
+				title = title.replace("/", "") #get rid of any slashes
 				file = open("articles/" + title,"w+")
 				file.write(html)
 				file.close()

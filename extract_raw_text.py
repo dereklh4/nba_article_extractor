@@ -25,6 +25,10 @@ for filename in os.listdir(os.getcwd() + "/articles"):
 	except:
 		print("Unable to extract raw text from " + filename)
 	text = article.cleaned_text
+	
+	if len(text) == 0:
+		print("Unable to extract raw text from " + filename)
+		continue
 
 	#remove non ascii
 	printable = set(string.printable)
