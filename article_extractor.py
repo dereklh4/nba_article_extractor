@@ -33,15 +33,14 @@ with open(file_name) as file:
 			continue
 		elif href.find("nba") == -1: #must be in nba
 			continue
-		elif href.find("http") == -1: #must have http link
-			continue
-		elif href.find("espn") == -1: #avoid any external links
+		elif href.find("http") == -1 or href.find("espn") == -1: #must have http link and from espn
 			continue
 		else:
 			print(href)
 			total += 1
 			i += 1
-			if i < 5: #only download 5 for now. Change once doing more
+			#if i < 5: #cap at 5 for debugging
+			if title != None and not os.path.isfile("articles/" + title):
 				response = urllib2.urlopen(href)
 				html = response.read()
 				file = open("articles/" + title,"w+")
