@@ -22,8 +22,19 @@ if __name__ == "__main__":
 	
 	folder = "test"
 	doc_id = 1
+	output_file = "examples.csv"
+
+	with open(output_file,"w+") as f:
+		writer = csv.writer(f)
+		headers = ["string","doc_id","word_loc","number_words","before_'s","contains_'s","before_after_said","position_or_title_before",
+		"two_capitals","capital_before","capital_after","contains_first_name","first_name_before","first_name_after","contains_last_name",
+		"last_name_before","last_name_after","common_proper_noun","contains_nba_teamcity","contains_nba_person",
+		"contains_partial_nba_person","label"]
+		writer.writerow(headers)
 
 	for filename in os.listdir(os.getcwd() + "/" + folder):
+		if filename.find("test") == -1:
+			continue
 		#extract words
 		words = []
 		with open(folder + "/" + filename) as f:
@@ -37,12 +48,15 @@ if __name__ == "__main__":
 				
 				j = i+1+n #i marks beginning of string, j marks end of string
 				marked_string = " ".join(words[i:j])
-				example_string = marked_string
 
 				### PREPROCESSING ###
 
-				for c in ["<","/>","[","]","(",")","\"","."]:
-					example_string = example_string.replace(c,"")
+				for c in ["[","]","(",")","\"","."]:
+					marked_string = marked_string.replace(c,"")
+
+				example_string = marked_string
+				for c in ["<","/>"]:
+					example_string = example_string.replace(c,"")					
 				
 				### PRUNING ###
 
@@ -142,10 +156,10 @@ if __name__ == "__main__":
 					label = 1
 
 				output = [example_string,doc_id,i,f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,label]
-
 				print(output)
-
-				#save to file
+				with open(output_file,"a+") as f:
+					writer = csv.writer(f)
+					writer.writerow(output)
 
 
 		doc_id += 1
