@@ -46,8 +46,8 @@ if __name__ == "__main__":
 		for i in xrange(len(words)):
 			for n in xrange(min(4,len(words)-i)):
 				
-				j = i+1+n #i marks beginning of string, j marks end of string
-				marked_string = " ".join(words[i:j])
+				j = i+n #i marks beginning of string, j marks end of string
+				marked_string = " ".join(words[i:j+1])
 
 				### PREPROCESSING ###
 
@@ -123,9 +123,9 @@ if __name__ == "__main__":
 				f10 = 0
 				f11 = 0
 				if i > 0:
-					f10 = check_dictionary("dictionaries/first_names.csv", words[i-1])
+					f10 = 1 if check_dictionary("dictionaries/first_names.csv", words[i-1]) and any(x.isupper() for x in words[i-1]) else 0
 				if j < len(words)-1:
-					f11 = check_dictionary("dictionaries/first_names.csv", words[j+1])
+					f11 = 1 if check_dictionary("dictionaries/first_names.csv", words[j+1]) and any(x.isupper() for x in words[j+1]) else 0
 
 				#f12: contains a last name (from http://deron.meranda.us/data/)
 				#f13: preceeded by a last name
@@ -134,9 +134,9 @@ if __name__ == "__main__":
 				f13 = 0
 				f14 = 0
 				if i > 0:
-					f13 = check_dictionary("dictionaries/last_names.csv",words[i-1])
+					f13 = 1 if check_dictionary("dictionaries/last_names.csv",words[i-1]) and any(x.isupper() for x in words[i-1]) else 0
 				if j< len(words)-1:
-					f14 = check_dictionary("dictionaries/last_names.csv",words[j+1])
+					f14 = 1 if check_dictionary("dictionaries/last_names.csv",words[j+1]) and any(x.isupper() for x in words[j+1]) else 0
 
 				#f15: contains common proper noun (months and days)
 				f15 = check_dictionary("dictionaries/proper_nouns.csv",example_string)
