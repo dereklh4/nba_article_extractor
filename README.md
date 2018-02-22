@@ -19,7 +19,7 @@ We labeled all occurances of person names in 300 documents with the tag </> (e.g
 
 For training we needed to extract examples from the text with features and labels. The process can be found in "example_generator.py". It extracts examples from the text, prunes away obvious non-names (e.g not capitalized, odd punctuation, etc), generates features for the examples (e.g. contains common first name, contains NBA team or city, etc), and labels it accordingly (is it tagged?). Using the extracted positive and negative examples, we could develop a learning algorithm.
 
-The best algorithm we found for this problem was the Random Forest Algorithm. It was able to achieve precision of 92.6% and recall of 92.4%.
+The best algorithm we found for this problem was the Random Forest Algorithm. It was able to achieve precision of 92.6% and recall of 92.4%. The comparison's of the learning algorithms can be observed in "compare_classifier.ipynb"
 
 ### Dependencies (for step 1)
 
