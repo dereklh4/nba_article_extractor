@@ -37,11 +37,15 @@ if __name__ == "__main__":
 		headers = ["string","doc_id","word_loc","string_length","number_words","before_'s","contains_'s","before_after_said","position_or_title_before","post_name_after",
 		"two_capitals","capital_before","capital_after","contains_first_name","first_name_before","first_name_after","contains_last_name",
 		"last_name_before","last_name_after","common_proper_noun","contains_nba_teamcity","contains_nba_person",
-		"contains_partial_nba_person","label"]
+		"contains_partial_nba_person","partial_nba_person_before","partial_nba_person_after","label"]
 		writer.writerow(headers)
 
 	count = 0
 	files = os.listdir(os.getcwd() + "/" + folder)
+
+	f = open(output_file,"a+")
+	writer = csv.writer(f)
+	
 	for filename in files:
 		#show progress
 		count += 1
@@ -110,6 +114,9 @@ if __name__ == "__main__":
 					continue
 
 				if example_string.find(":") != -1:
+					continue
+
+				if example_string.find("?") != -1:
 					continue
 
 				### FEATURES ###
@@ -201,6 +208,15 @@ if __name__ == "__main__":
 				#f18: contains partial name of NBA player or coach
 				f18 = check_dictionary("dictionaries/players.csv",example_string,check_partial=True) or check_dictionary("dictionaries/coaches.csv",example_string,check_partial=True)
 
+				#f19: preceeded by partial NBA player or coach
+				#f20: followed by partial NBA player or coach
+				f19 = 0
+				f20 = 0
+				if i > 0:
+					f19 = 1 if check_dictionary("dictionaries/players.csv",words[i-1],check_partial=True) or check_dictionary("dictionaries/coaches.csv",words[i-1],check_partial=True) else 0
+				if j< len(words)-1:
+					f20 = 1 if check_dictionary("dictionaries/players.csv",words[j+1],check_partial=True) or check_dictionary("dictionaries/coaches.csv",words[j+1],check_partial=True) else 0
+
 				#label: if starts with < and ends with />
 				label = 0
 				if len(marked_string) > 0:
@@ -209,11 +225,9 @@ if __name__ == "__main__":
 
 				doc_id = filename[0:4]
 
-				output = [example_string,doc_id,i,f0, f1,f2,f3,f4,f5,f55,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,label]
+				output = [example_string,doc_id,i,f0, f1,f2,f3,f4,f5,f55,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,f19,f20,label]
 				#print(output)
-				with open(output_file,"a+") as f:
-					writer = csv.writer(f)
-					writer.writerow(output)
+				writer.writerow(output)
 
 			
 
