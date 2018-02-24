@@ -217,10 +217,10 @@ if __name__ == "__main__":
 				if j< len(words)-1:
 					f20 = 1 if check_dictionary("dictionaries/players.csv",words[j+1],check_partial=True) or check_dictionary("dictionaries/coaches.csv",words[j+1],check_partial=True) else 0
 
-				#label: if starts with < and ends with />
+				#label: if starts with < and ends with /> and no extras in the middle
 				label = 0
 				if len(marked_string) > 0:
-					if marked_string[0] == "<" and marked_string[-2:] == "/>":
+					if marked_string[0] == "<" and marked_string[-2:] == "/>" and len(marked_string.replace("<","").replace("/>","")) == len(marked_string) - 3:
 						label = 1
 
 				doc_id = filename[0:4]
